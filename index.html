@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Stock Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="https://www.linkedin.com/in/jashweg-raval-292897282?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="credit-button">
+        Made by Jashweg G Raval
+    </a>
+
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <header class="header">
+            <h1>StockPredict <span class="badge">AI</span></h1>
+            <p>Enter market parameters to forecast the next day's closing direction.</p>
+        </header>
+
+        <main class="main-content">
+            <div class="card form-card">
+                <h2>Prediction Parameters</h2>
+                <form id="prediction-form">
+                    <div class="input-group" style="position: relative;">
+                        <label for="ticker">Ticker Symbol</label>
+                        <input type="text" id="ticker" placeholder="e.g., AAPL" value="AAPL" autocomplete="off" required>
+                        <div id="suggestions-container" class="suggestions-container" style="display: none;"></div>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.4rem;">Enter company name same as Yahoo Finance</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="start-date">Start Date</label>
+                        <input type="date" id="start-date" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="end-date">End Date</label>
+                        <input type="date" id="end-date" required>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="glow-button">Generate Prediction</button>
+                </form>
+            </div>
+
+            <div class="card result-card" id="result-card">
+                <div class="loader" id="loader">
+                    <div class="spinner"></div>
+                    <p>Analyzing technical indicators...</p>
+                </div>
+
+                <div class="result-content" id="result-content" style="display: none;">
+                    <h3 id="result-ticker">AAPL</h3>
+                    <div class="prediction-display">
+                        <div class="prediction-value" id="prediction-value">UP</div>
+                        <div class="prediction-icon" id="prediction-icon">📈</div>
+                    </div>
+                    
+                    <div class="metrics">
+                        <div class="metric-box">
+                            <span class="metric-label">Confidence</span>
+                            <span class="metric-value" id="confidence-value">85%</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Model Accuracy</span>
+                            <span class="metric-value" id="accuracy-value">72%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart Container -->
+                    <div id="chart-container" style="width: 100%; height: 350px; margin-top: 2rem;"></div>
+                </div>
+
+                <div class="error-content" id="error-content" style="display: none;">
+                    <div class="error-icon">⚠️</div>
+                    <p id="error-message">Failed to fetch data.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>
