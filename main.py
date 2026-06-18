@@ -1,18 +1,26 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 import pandas as pd
 from datetime import datetime
 import requests
+import os
 
 from data_fetcher import fetch_data, preprocess_data
 from model import train_model, predict_tomorrow
 
 app = FastAPI(title="Stock Prediction API")
 
-# Mount static files to serve the frontend
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Mount static files to serve the frontend robustly on Vercel
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.exists(static_dir):
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+@app.get("/")
+def read_root():
+    return RedirectResponse(url="/static/index.html")
 
 # Enable CORS for local development
 app.add_middleware(
